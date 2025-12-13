@@ -98,7 +98,7 @@ buildCommand
       logger.info('Building main process')
       await execa(
         'node',
-        [path.join(import.meta.dirname, 'webpack.config')],
+        [path.join(import.meta.dirname, 'webpack.config.mjs')],
         execaOptions
       )
 
