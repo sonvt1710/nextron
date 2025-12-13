@@ -35,17 +35,17 @@ export const buildCommand = new Command('build')
 
 buildCommand
   .description('Build nextron')
-  .option('--mac', '説明')
-  .option('--linux', '説明')
-  .option('--win', '説明')
-  .option('--x64', '説明')
-  .option('--ia32', '説明')
-  .option('--armv7l', '説明')
-  .option('--arm64', '説明')
-  .option('--universal', '説明')
-  .option('--config <string>', '説明')
-  .option('--publish <string>', '説明')
-  .option('--no-pack', '説明')
+  .option('--mac')
+  .option('--linux')
+  .option('--win')
+  .option('--x64')
+  .option('--ia32')
+  .option('--armv7l')
+  .option('--arm64')
+  .option('--universal')
+  .option('--config <string>')
+  .option('--publish <string>')
+  .option('--no-pack')
   .action(async (options: BuildCommandOptions) => {
     function createBuilderArgs() {
       const results = []

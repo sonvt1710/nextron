@@ -9,20 +9,19 @@ import type { ChildProcess } from 'child_process'
 
 type DevCommandOptions = {
   rendererPort: number
-  runOnly: boolean
   startupDelay: number
   electronOptions: string
+  runOnly: boolean
 }
 
 export const devCommand = new Command('dev')
 
 devCommand
   .description('Start nextron dev server')
-  // .argument('[dir]', '公開するディレクトリ', './public')
-  .option('--renderer-port <number>', 'Port number', '8888')
-  .option('--run-only', '説明')
-  .option('--startup-delay <number>', '説明', '0')
-  .option('--electron-options', '説明')
+  .option('--renderer-port <number>')
+  .option('--startup-delay <number>')
+  .option('--electron-options <string>')
+  .option('--run-only')
   .action(async (options: DevCommandOptions) => {
     const rendererPort = options.rendererPort || 8888
     let electronOptions = options.electronOptions || ''
