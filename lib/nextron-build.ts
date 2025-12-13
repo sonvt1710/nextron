@@ -35,7 +35,6 @@ export const buildCommand = new Command('build')
 
 buildCommand
   .description('Build nextron')
-  // .argument('[dir]', '公開するディレクトリ', './public')
   .option('--mac', '説明')
   .option('--linux', '説明')
   .option('--win', '説明')
@@ -48,8 +47,6 @@ buildCommand
   .option('--publish <string>', '説明')
   .option('--no-pack', '説明')
   .action(async (options: BuildCommandOptions) => {
-    console.log({ options })
-
     function createBuilderArgs() {
       const results = []
 

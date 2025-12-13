@@ -24,10 +24,6 @@ devCommand
   .option('--startup-delay <number>', '説明', '0')
   .option('--electron-options', '説明')
   .action(async (options: DevCommandOptions) => {
-    console.log({ options })
-
-    // let { rendererPort, runOnly, startupDelay, electronOptions } = options
-
     const rendererPort = options.rendererPort || 8888
     let electronOptions = options.electronOptions || ''
     if (!electronOptions.includes('--remote-debugging-port')) {

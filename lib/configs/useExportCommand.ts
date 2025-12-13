@@ -62,7 +62,7 @@ export const useExportCommand = async (): Promise<boolean> => {
       )
       process.exit(1)
     }
-    if (distDir !== '../app') {
+    if (process.env.NODE_ENV === 'production' && distDir !== '../app') {
       logger.error(
         'Nextron exports the build results to "app" directory, so please set "distDir" to "../app" in next.config.js.'
       )
