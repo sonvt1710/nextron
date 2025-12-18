@@ -101,10 +101,10 @@ buildCommand
 
       logger.info('See `dist` directory')
     } catch (err) {
-      console.log(chalk`
+      console.log(`
 
-{bold.red Cannot build electron packages:}
-{bold.yellow ${err}}
+${chalk.red('Cannot build electron packages:')}
+${chalk.yellow(err)}
 `)
       process.exit(1)
     }
