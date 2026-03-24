@@ -1,6 +1,7 @@
 packages:
   - .
 onlyBuiltDependencies:
+  - core-js-pure
   - esbuild
   - lefthook
   - nx
