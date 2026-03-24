@@ -26,11 +26,10 @@ export default function LanguageSwitcher() {
         return (
           <Link
             key={locale_}
-            legacyBehavior
             passHref
             href={pathname.replace('[locale]', locale_)}
           >
-            <a>{localeNames[locale_]}</a>
+            {localeNames[locale_]}
           </Link>
         )
       })}
