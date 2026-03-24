@@ -12,12 +12,6 @@
   </a>
 </p>
 
-<h2 align="center">
-  <a aria-label="2024 Roadmaps - I'm back!" href="https://github.com/saltyshiomix/nextron/issues/442">
-    2024 Roadmaps - I'm back!
-  </a>
-</h2>
-
 ## Support
 
 ### Next.js vs Nextron
@@ -52,15 +46,15 @@ We can use `examples/*` as a template.
 
 To create the `examples/with-tailwindcss`, run the command below:
 
-```
+```sh
 # with npx
-$ npx create-nextron-app MY_APP --example with-tailwindcss
+npx create-nextron-app MY_APP --example with-tailwindcss
 
 # with yarn
-$ yarn create nextron-app MY_APP --example with-tailwindcss
+yarn create nextron-app MY_APP --example with-tailwindcss
 
 # with pnpm
-$ pnpm dlx create-nextron-app MY_APP --example with-tailwindcss
+pnpm dlx create-nextron-app MY_APP --example with-tailwindcss
 ```
 
 ### Run Electron with Development Mode
@@ -117,7 +111,7 @@ Run `npm run build`, and nextron outputs packaged bundles under the `dist` folde
 ## `next.config.js`
 
 ```js
-// in `./renderer/next.config.js`
+// `./renderer/next.config.js`
 module.exports = {
   // we need to export static files so as Electron can handle them
   output: 'export',
@@ -135,11 +129,6 @@ module.exports = {
   // we need to disable image optimization, because it is not compatible with `{ output: 'export' }`
   images: {
     unoptimized: true,
-  },
-
-  // webpack config for next.js
-  webpack: (config) => {
-    return config
   },
 }
 ```
@@ -202,8 +191,6 @@ We can pass electron args via `--electron-options`:
 - Please consider to use `electron-builder.yml` instead of these CLI options.
   - [Command Line Interface (CLI) - electron-builder](https://www.electron.build/cli)
   - [Common Configuration - electron-builder](https://www.electron.build/configuration/configuration)
-
-To build Windows 32 bit version, run `npm run build:win32` like below:
 
 ```json
 {
@@ -304,30 +291,30 @@ We can extends the default babel config of main process by putting `.babelrc` in
 
 <p align="center"><img src="https://i.imgur.com/X7dSE68.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example basic-lang-javascript
+npx create-nextron-app my-app --example basic-lang-javascript
 
 # with yarn
-$ yarn create nextron-app my-app --example basic-lang-javascript
+yarn create nextron-app my-app --example basic-lang-javascript
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-lang-javascript
+pnpm dlx create-nextron-app my-app --example basic-lang-javascript
 ```
 
 ### [examples/basic-lang-typescript](./examples/basic-lang-typescript)
 
 <p align="center"><img src="https://i.imgur.com/NZfsD1p.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example basic-lang-typescript
+npx create-nextron-app my-app --example basic-lang-typescript
 
 # with yarn
-$ yarn create nextron-app my-app --example basic-lang-typescript
+yarn create nextron-app my-app --example basic-lang-typescript
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-lang-typescript
+pnpm dlx create-nextron-app my-app --example basic-lang-typescript
 ```
 
 ### [examples/basic-launch-app-from-url](./examples/basic-launch-app-from-url)
@@ -338,20 +325,20 @@ Note: this example works **only production build**!
 
 <p align="center"><img src="./docs/examples/basic-launch-app-from-url/nextron.gif"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example basic-launch-app-from-url
+npx create-nextron-app my-app --example basic-launch-app-from-url
 
 # with yarn
-$ yarn create nextron-app my-app --example basic-launch-app-from-url
+yarn create nextron-app my-app --example basic-launch-app-from-url
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-launch-app-from-url
+pnpm dlx create-nextron-app my-app --example basic-launch-app-from-url
 
 # --------------------------------------------------------------
 
 # Production build
-$ yarn build (or `npm run build` or `pnpm run build`)
+yarn build (or `npm run build` or `pnpm run build`)
 ```
 
 After production build, open `your-custom-protocol://open?token=jwt-value` in your browser, then the app will be shown like a magic!
@@ -370,60 +357,60 @@ Then, you can see the app from URL: `your-custom-protocol-edited://any-uri-here?
 
 <p align="center"><img src="https://i.imgur.com/BgFze6G.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example basic-store-data
+npx create-nextron-app my-app --example basic-store-data
 
 # with yarn
-$ yarn create nextron-app my-app --example basic-store-data
+yarn create nextron-app my-app --example basic-store-data
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-store-data
+pnpm dlx create-nextron-app my-app --example basic-store-data
 ```
 
 ### [examples/custom-build-options](./examples/custom-build-options)
 
 <p align="center"><img src="https://i.imgur.com/QqQekRJ.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example custom-build-options
+npx create-nextron-app my-app --example custom-build-options
 
 # with yarn
-$ yarn create nextron-app my-app --example custom-build-options
+yarn create nextron-app my-app --example custom-build-options
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example custom-build-options
+pnpm dlx create-nextron-app my-app --example custom-build-options
 ```
 
 ### [examples/custom-renderer-port](./examples/custom-renderer-port)
 
 <p align="center"><img src="https://i.imgur.com/X7dSE68.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example custom-renderer-port
+npx create-nextron-app my-app --example custom-renderer-port
 
 # with yarn
-$ yarn create nextron-app my-app --example custom-renderer-port
+yarn create nextron-app my-app --example custom-renderer-port
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example custom-renderer-port
+pnpm dlx create-nextron-app my-app --example custom-renderer-port
 ```
 
 ### [examples/with-ant-design](./examples/with-ant-design)
 
 <p align="center"><img src="https://i.imgur.com/NrkTPe9.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-ant-design
+npx create-nextron-app my-app --example with-ant-design
 
 # with yarn
-$ yarn create nextron-app my-app --example with-ant-design
+yarn create nextron-app my-app --example with-ant-design
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-ant-design
+pnpm dlx create-nextron-app my-app --example with-ant-design
 ```
 
 ### [examples/with-chakra-ui](./examples/with-chakra-ui)
@@ -433,111 +420,111 @@ $ pnpm dlx create-nextron-app my-app --example with-ant-design
   <img src="https://i.imgur.com/sZ01Nyl.png">
 </p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-chakra-ui
+npx create-nextron-app my-app --example with-chakra-ui
 
 # with yarn
-$ yarn create nextron-app my-app --example with-chakra-ui
+yarn create nextron-app my-app --example with-chakra-ui
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-chakra-ui
+pnpm dlx create-nextron-app my-app --example with-chakra-ui
 ```
 
 ### [examples/with-emotion](./examples/with-emotion)
 
 <p align="center"><img src="https://i.imgur.com/3UKgyH7.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-emotion
+npx create-nextron-app my-app --example with-emotion
 
 # with yarn
-$ yarn create nextron-app my-app --example with-emotion
+yarn create nextron-app my-app --example with-emotion
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-emotion
+pnpm dlx create-nextron-app my-app --example with-emotion
 ```
 
 ### [examples/with-material-ui](./examples/with-material-ui)
 
 <p align="center"><img src="https://i.imgur.com/flcMvDC.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-material-ui
+npx create-nextron-app my-app --example with-material-ui
 
 # with yarn
-$ yarn create nextron-app my-app --example with-material-ui
+yarn create nextron-app my-app --example with-material-ui
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-material-ui
+pnpm dlx create-nextron-app my-app --example with-material-ui
 ```
 
 ### [examples/with-next-i18next](./examples/with-next-i18next)
 
 <p align="center"><img src="https://i.imgur.com/uhXCr6v.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-next-i18next
+npx create-nextron-app my-app --example with-next-i18next
 
 # with yarn
-$ yarn create nextron-app my-app --example with-next-i18next
+yarn create nextron-app my-app --example with-next-i18next
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-next-i18next
+pnpm dlx create-nextron-app my-app --example with-next-i18next
 ```
 
 ### [examples/with-tailwindcss](./examples/with-tailwindcss)
 
 <p align="center"><img src="https://i.imgur.com/a9QWW0v.png"></p>
 
-```
+```sh
 # with npx
-$ npx create-nextron-app my-app --example with-tailwindcss
+npx create-nextron-app my-app --example with-tailwindcss
 
 # with yarn
-$ yarn create nextron-app my-app --example with-tailwindcss
+yarn create nextron-app my-app --example with-tailwindcss
 
 # with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-tailwindcss
+pnpm dlx create-nextron-app my-app --example with-tailwindcss
 ```
 
 ## Develop
 
 ### Basic
 
-```
-$ git clone https://github.com/saltyshiomix/nextron.git
-$ cd nextron
-$ pnpm install
-$ npx lefthook install
-$ pnpm dev # default is examples/basic-lang-javascript
+```sh
+git clone https://github.com/saltyshiomix/nextron.git
+cd nextron
+pnpm install
+npx lefthook install
+pnpm dev # default is examples/basic-lang-javascript
 ```
 
 ### Developing `examples/*`
 
-```
-$ pnpm dev <EXAMPLE-FOLDER-NAME>
+```sh
+pnpm dev <EXAMPLE-FOLDER-NAME>
 ```
 
 ### Developing for your own project
 
 1. Install development version of nextron
 
-```
-$ cd nextron
-$ npm install
-$ npm run build
-$ npm link
+```sh
+cd nextron
+npm install
+npm run build
+npm link
 ```
 
 2. Install linked nextron in your project
 
-```
-$ cd your-project
-$ npm link nextron
+```sh
+cd your-project
+npm link nextron
 ```
 
 3. On every change in nextron, run `npm run build` in nextron folder and restart your project
