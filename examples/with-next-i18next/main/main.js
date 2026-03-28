@@ -2,7 +2,7 @@ import path from 'path'
 import { app, ipcMain } from 'electron'
 import serve from 'electron-serve'
 
-import i18next from '../next-i18next.config.js'
+import i18next from '../next-i18next.config.cjs'
 import { userStore } from './helpers/user-store.js'
 import { createWindow } from './helpers/index.js'
 

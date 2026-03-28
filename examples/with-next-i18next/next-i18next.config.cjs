@@ -1,7 +1,7 @@
-import path from 'path'
+process.env.I18NEXT_DEFAULT_CONFIG_PATH = 'next-i18next.config.cjs'
 
 /** @type {import('next-i18next').UserConfig} */
-export default {
+module.exports = {
   i18n: {
     defaultLocale: 'en',
     locales: ['de', 'en'],
@@ -10,6 +10,6 @@ export default {
   reloadOnPrerender: process.env.NODE_ENV === 'development',
   localePath:
     typeof window === 'undefined'
-      ? path.resolve('./renderer/public/locales')
+      ? require('path').resolve('./renderer/public/locales')
       : '/locales',
 }

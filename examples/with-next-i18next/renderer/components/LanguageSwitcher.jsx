@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 
-import i18next from '../../next-i18next.config'
+import i18next from '../../next-i18next.config.cjs'
 
 const localeNames = {
   de: 'Deutsch',
