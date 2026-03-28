@@ -1,36 +1,26 @@
-import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin'
-import { getNextronConfig } from './getNextronConfig'
-import { getBabelConfig } from './getBabelConfig'
+import { isTs, ext, isEsm, externals } from '../helpers/get-project-settings'
+import { getNextronConfig } from '../helpers/get-nextron-config'
+import { getBabelPath } from '../helpers/get-babel-path'
 
 const cwd = process.cwd()
-const isTs = fs.existsSync(path.join(cwd, 'tsconfig.json'))
-const ext = isTs ? '.ts' : '.js'
-const pkg = require(path.join(cwd, 'package.json')) // eslint-disable-line @typescript-eslint/no-require-imports
-const isEsm = pkg.type === 'module'
-const externals = pkg.dependencies
 
-const getMainConfig = async () => {
+export const getBaseConfigMain = async (): Promise<webpack.Configuration> => {
   const { mainSrcDir } = await getNextronConfig()
+
   const backgroundPath = path.join(
     cwd,
     mainSrcDir || 'main',
     `background${ext}`
   )
-  const preloadPath = path.join(cwd, mainSrcDir || 'main', `preload${ext}`)
 
-  const entry: webpack.Configuration['entry'] = {
-    background: backgroundPath,
-  }
-  if (fs.existsSync(preloadPath)) {
-    entry.preload = preloadPath
-  }
-
-  const baseConfig: webpack.Configuration = {
+  const config: webpack.Configuration = {
     target: 'electron-main',
-    entry,
+    entry: {
+      background: backgroundPath,
+    },
     output: {
       filename: '[name].js',
       path: path.join(cwd, 'app'),
@@ -51,7 +41,7 @@ const getMainConfig = async () => {
             loader: require.resolve('babel-loader'),
             options: {
               cacheDirectory: true,
-              extends: getBabelConfig(),
+              extends: getBabelPath(),
             },
           },
           exclude: [/node_modules/, path.join(cwd, 'renderer')],
@@ -59,7 +49,7 @@ const getMainConfig = async () => {
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+      extensions: ['.ts', '.js', '.json'],
       modules: ['node_modules'],
       plugins: [isTs ? new TsconfigPathsPlugins() : null].filter(Boolean),
     },
@@ -70,7 +60,5 @@ const getMainConfig = async () => {
     },
   }
 
-  return baseConfig
+  return config
 }
-
-export { getMainConfig }

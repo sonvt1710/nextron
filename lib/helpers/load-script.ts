@@ -2,11 +2,29 @@
 
 import path from 'path'
 import { createJiti } from 'jiti'
-import { TypeScriptCompileError } from './typescriptCompileError'
 
 type Jiti = ReturnType<typeof createJiti>
 type JitiOptions = Parameters<typeof createJiti>[1]
 type LoaderAsync = (filepath: string) => Promise<any>
+
+class TypeScriptCompileError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = this.constructor.name
+
+    // https://github.com/Microsoft/TypeScript-wiki/blob/main/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
+    Object.setPrototypeOf(this, new.target.prototype)
+  }
+
+  public static fromError(error: Error): TypeScriptCompileError {
+    const message = `TypeScriptLoader failed to compile TypeScript:\n${error.message}`
+
+    const newError = new TypeScriptCompileError(message)
+    newError.stack = error.stack
+
+    return newError
+  }
+}
 
 function TypeScriptLoader(options?: JitiOptions): LoaderAsync {
   const loader: Jiti = createJiti('nextron', {
@@ -27,10 +45,9 @@ function TypeScriptLoader(options?: JitiOptions): LoaderAsync {
   }
 }
 
-export async function loadScriptFile<T = any>(filePath: string): Promise<T> {
+export async function loadScript<T = any>(filePath: string): Promise<T> {
   if (['.js', '.mjs', '.cjs'].includes(path.extname(filePath))) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const mod = require(filePath)
+    const mod = require(filePath) // eslint-disable-line @typescript-eslint/no-require-imports
     return (mod.default || mod) as T
   }
   return TypeScriptLoader()(filePath) as T

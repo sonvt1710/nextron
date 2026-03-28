@@ -1,4 +1,4 @@
-import { getNextConfig } from './getNextConfig'
+import { getNextConfig } from './get-next-config'
 import * as logger from '../logger'
 
 export const checkNextConfig = async (): Promise<void> => {

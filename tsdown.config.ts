@@ -11,7 +11,7 @@ export default defineConfig([
   },
   {
     entry: {
-      'webpack.config': 'lib/configs/webpack.config.production.ts',
+      'webpack.config': 'lib/webpack/production/webpack.config.ts',
     },
     outDir: 'bin',
     format: 'cjs',

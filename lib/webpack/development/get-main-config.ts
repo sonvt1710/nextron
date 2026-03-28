@@ -1,12 +1,12 @@
 import webpack from 'webpack'
 import { merge } from 'webpack-merge'
-import { getNextronConfig } from './getNextronConfig'
-import { getMainConfig } from './webpack.config.main'
+import { getNextronConfig } from '../../helpers/get-nextron-config'
+import { getBaseConfigMain } from '../get-base-config-main'
 
-const getConfig = async () => {
+export const getMainConfig = async () => {
   const { webpack: userWebpack } = await getNextronConfig()
 
-  let config: webpack.Configuration = merge(await getMainConfig(), {
+  let config: webpack.Configuration = merge(await getBaseConfigMain(), {
     mode: 'development',
     devtool: 'inline-source-map',
     plugins: [
@@ -25,5 +25,3 @@ const getConfig = async () => {
 
   return config
 }
-
-export { getConfig }

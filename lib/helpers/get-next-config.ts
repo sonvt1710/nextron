@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { getNextronConfig } from './getNextronConfig'
-import { loadScriptFile } from './typescriptLoader'
+import { getNextronConfig } from './get-nextron-config'
+import { loadScript } from './load-script'
 
 const cwd = process.cwd()
 
@@ -16,15 +16,12 @@ const supportedConfigs = [
 export const getNextConfig = async (): Promise<any> => {
   const rendererSrcDir = (await getNextronConfig()).rendererSrcDir || 'renderer'
 
-  let nextConfig = {}
-
   for (const config of supportedConfigs) {
     const configPath = path.join(cwd, rendererSrcDir, config)
     if (fs.existsSync(configPath)) {
-      nextConfig = await loadScriptFile(configPath)
-      break
+      return loadScript(configPath)
     }
   }
 
-  return nextConfig
+  return {}
 }

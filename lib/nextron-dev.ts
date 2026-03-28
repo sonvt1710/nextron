@@ -3,8 +3,9 @@ import { $ } from 'execa'
 import webpack from 'webpack'
 import { waitForPort } from 'get-port-please'
 import * as logger from './logger'
-import { getNextronConfig } from './configs/getNextronConfig'
-import { getConfig } from './configs/webpack.config.development'
+import { getNextronConfig } from './helpers/get-nextron-config'
+import { getMainConfig } from './webpack/development/get-main-config'
+import { getPreloadConfig } from './webpack/development/get-preload-config'
 import type { ChildProcess } from 'child_process'
 
 const $$ = $({ cwd: process.cwd(), stdio: 'inherit' })
@@ -38,7 +39,8 @@ devCommand
     const startupDelay = nextronConfig.startupDelay || options.startupDelay || 0
 
     let firstCompile = true
-    let watching: webpack.Watching | undefined
+    let watchingMain: webpack.Watching | undefined
+    let watchingPreload: webpack.Watching | undefined
     let mainProcess: ChildProcess
     let rendererProcess: ChildProcess // eslint-disable-line prefer-const
 
@@ -73,8 +75,11 @@ devCommand
     }
 
     const killWholeProcess = () => {
-      if (watching) {
-        watching.close(() => {})
+      if (watchingMain) {
+        watchingMain.close(() => {})
+      }
+      if (watchingPreload) {
+        watchingPreload.close(() => {})
       }
       if (mainProcess) {
         mainProcess.kill()
@@ -102,12 +107,22 @@ devCommand
       process.exit(1)
     })
 
-    const config = await getConfig()
+    const mainConfig = await getMainConfig()
+    const preloadConfig = await getPreloadConfig()
+
+    // build preload script before starting main process
+    await new Promise<void>((resolve) => {
+      watchingPreload = webpack(preloadConfig).watch({}, (error) => {
+        if (error) {
+          console.error(error.stack || error)
+        }
+        resolve()
+      })
+    })
 
     // wait until main process is ready
     await new Promise<void>((resolve) => {
-      const compiler = webpack(config)
-      watching = compiler.watch({}, (error) => {
+      watchingMain = webpack(mainConfig).watch({}, (error) => {
         if (error) {
           console.error(error.stack || error)
         }

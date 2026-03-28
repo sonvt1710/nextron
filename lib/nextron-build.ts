@@ -6,8 +6,8 @@ import { Command } from 'commander'
 import chalk from 'chalk'
 import { $ } from 'execa'
 import * as logger from './logger'
-import { checkNextConfig } from './configs/checkNextConfig'
-import { getNextronConfig } from './configs/getNextronConfig'
+import { checkNextConfig } from './helpers/check-next-config'
+import { getNextronConfig } from './helpers/get-nextron-config'
 
 const cwd = process.cwd()
 const appDir = path.join(cwd, 'app')
