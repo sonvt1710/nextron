@@ -27,10 +27,7 @@ class TypeScriptCompileError extends Error {
 }
 
 function TypeScriptLoader(options?: JitiOptions): LoaderAsync {
-  const loader: Jiti = createJiti('nextron', {
-    interopDefault: true,
-    ...options,
-  })
+  const loader: Jiti = createJiti('', { interopDefault: true, ...options })
   return async (path: string): Promise<any> => {
     try {
       const mod = (await loader.import(path)) as { default?: unknown }
