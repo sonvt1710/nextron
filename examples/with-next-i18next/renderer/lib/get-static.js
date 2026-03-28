@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import i18next from '../../next-i18next.config.js'
+import i18next from '../../next-i18next.config.cjs'
 
 export function getI18nPaths() {
   return ['en', 'de'].map((locale) => ({

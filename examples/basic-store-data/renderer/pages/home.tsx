@@ -5,12 +5,12 @@ import Image from 'next/image'
 
 export default function HomePage() {
   const [message, setMessage] = React.useState('')
-  const [messages, setMessages] = React.useState([])
+  const [messages, setMessages] = React.useState<string[]>([])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMessage(e.target.value)
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     window.ipc.send('add-message', message)

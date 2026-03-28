@@ -1,3 +1,3 @@
-import './ipc'
+import './ipc.js'
 
-export * from './create-window'
+export * from './create-window.js'

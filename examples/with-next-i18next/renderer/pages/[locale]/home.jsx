@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
 import LanguageSwitcher from '../../components/LanguageSwitcher'
-import { getStaticPaths, makeStaticProperties } from '../../lib/get-static'
+import { getStaticPaths, makeStaticProperties } from '../../lib/get-static.js'
 
 export default function HomePage() {
   const {

@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 
-import i18next from '../../next-i18next.config'
+import i18next from '../../next-i18next.config.cjs'
 
 const localeNames = {
   de: 'Deutsch',
@@ -26,11 +26,10 @@ export default function LanguageSwitcher() {
         return (
           <Link
             key={locale_}
-            legacyBehavior
             passHref
             href={pathname.replace('[locale]', locale_)}
           >
-            <a>{localeNames[locale_]}</a>
+            {localeNames[locale_]}
           </Link>
         )
       })}

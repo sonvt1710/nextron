@@ -1,5 +1,8 @@
 node_modules
 
+# lefthook
+.husky
+
 # nextron
 bin
 workspace

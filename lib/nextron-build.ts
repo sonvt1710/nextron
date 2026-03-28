@@ -1,99 +1,105 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import fs from 'fs-extra'
 import path from 'path'
-import arg from 'arg'
+import { Command } from 'commander'
 import chalk from 'chalk'
-import execa from 'execa'
+import { $ } from 'execa'
 import * as logger from './logger'
-import { getNextronConfig } from './configs/getNextronConfig'
-import { useExportCommand } from './configs/useExportCommand'
-
-const args = arg({
-  '--mac': Boolean,
-  '--linux': Boolean,
-  '--win': Boolean,
-  '--x64': Boolean,
-  '--ia32': Boolean,
-  '--armv7l': Boolean,
-  '--arm64': Boolean,
-  '--universal': Boolean,
-  '--config': String,
-  '--publish': String,
-  '--no-pack': Boolean,
-})
+import { checkNextConfig } from './helpers/check-next-config'
+import { getNextronConfig } from './helpers/get-nextron-config'
 
 const cwd = process.cwd()
 const appDir = path.join(cwd, 'app')
 const distDir = path.join(cwd, 'dist')
-const execaOptions: execa.Options = {
-  cwd,
-  stdio: 'inherit',
+const $$ = $({ cwd: process.cwd(), stdio: 'inherit' })
+
+type BuildCommandOptions = {
+  mac: boolean
+  linux: boolean
+  win: boolean
+  x64: boolean
+  ia32: boolean
+  armv7l: boolean
+  arm64: boolean
+  universal: boolean
+  config: string
+  publish: string
+  pack: boolean // `--no-pack` option
 }
 
-;(async () => {
-  const rendererSrcDir = (await getNextronConfig()).rendererSrcDir || 'renderer'
-  // Ignore missing dependencies
-  process.env.ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES = 'true'
+export const buildCommand = new Command('build')
 
-  try {
-    logger.info('Clearing previous builds')
-    await Promise.all([fs.remove(appDir), fs.remove(distDir)])
+buildCommand
+  .option('--mac')
+  .option('--linux')
+  .option('--win')
+  .option('--x64')
+  .option('--ia32')
+  .option('--armv7l')
+  .option('--arm64')
+  .option('--universal')
+  .option('--config <string>')
+  .option('--publish <string>')
+  .option('--no-pack')
+  .action(async (options: BuildCommandOptions) => {
+    function createBuilderArgs() {
+      const results = []
 
-    logger.info('Building renderer process')
-    await execa('next', ['build', path.join(cwd, rendererSrcDir)], execaOptions)
-    if (await useExportCommand()) {
-      await execa(
-        'next',
-        ['export', '-o', appDir, path.join(cwd, rendererSrcDir)],
-        execaOptions
-      )
+      if (options.config) {
+        results.push('--config')
+        results.push(options.config || 'electron-builder.yml')
+      }
+
+      if (options.publish) {
+        results.push('--publish')
+        results.push(options.publish)
+      }
+
+      options.mac && results.push('--mac')
+      options.linux && results.push('--linux')
+      options.win && results.push('--win')
+      options.x64 && results.push('--x64')
+      options.ia32 && results.push('--ia32')
+      options.armv7l && results.push('--armv7l')
+      options.arm64 && results.push('--arm64')
+      options.universal && results.push('--universal')
+
+      return results
     }
 
-    logger.info('Building main process')
-    await execa(
-      'node',
-      [path.join(__dirname, 'webpack.config.js')],
-      execaOptions
-    )
+    // Ignore missing dependencies
+    process.env.ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES = 'true'
 
-    if (args['--no-pack']) {
-      logger.info('Skip packaging...')
-    } else {
-      logger.info('Packaging - please wait a moment')
-      await execa('electron-builder', createBuilderArgs(), execaOptions)
-    }
+    const rendererSrcDir =
+      (await getNextronConfig()).rendererSrcDir || 'renderer'
 
-    logger.info('See `dist` directory')
-  } catch (err) {
-    console.log(chalk`
+    try {
+      logger.info('Checking next config')
+      await checkNextConfig()
 
-{bold.red Cannot build electron packages:}
-{bold.yellow ${err}}
+      logger.info('Clearing previous builds')
+      await Promise.all([fs.remove(appDir), fs.remove(distDir)])
+
+      logger.info('Building renderer process')
+      await $$('next', ['build', path.join(cwd, rendererSrcDir)])
+
+      logger.info('Building main process')
+      await $$('node', [path.join(import.meta.dirname, 'webpack.config.cjs')])
+
+      if (options.pack) {
+        logger.info('Packaging - please wait a moment')
+        await $$('electron-builder', createBuilderArgs())
+        logger.info('See `dist` directory')
+      } else {
+        logger.info('Skip packaging!')
+      }
+    } catch (err) {
+      console.log(`
+
+${chalk.red('Cannot build electron packages:')}
+${chalk.yellow(err)}
 `)
-    process.exit(1)
-  }
-})()
-
-function createBuilderArgs() {
-  const results = []
-
-  if (args['--config']) {
-    results.push('--config')
-    results.push(args['--config'] || 'electron-builder.yml')
-  }
-
-  if (args['--publish']) {
-    results.push('--publish')
-    results.push(args['--publish'])
-  }
-
-  args['--mac'] && results.push('--mac')
-  args['--linux'] && results.push('--linux')
-  args['--win'] && results.push('--win')
-  args['--x64'] && results.push('--x64')
-  args['--ia32'] && results.push('--ia32')
-  args['--armv7l'] && results.push('--armv7l')
-  args['--arm64'] && results.push('--arm64')
-  args['--universal'] && results.push('--universal')
-
-  return results
-}
+      process.exit(1)
+    }
+  })

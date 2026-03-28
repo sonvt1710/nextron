@@ -5,7 +5,7 @@ import type { Configuration as WebpackConfiguration } from 'webpack'
 /**
  * The configuration interface for nextron.
  */
-export declare interface Configuration {
+export declare interface NextronConfig {
   /**
    * Specify an alternate main src directory, defaults to 'main'.
    */
