@@ -1,5 +1,7 @@
+import path from 'path'
+
 /** @type {import('next-i18next').UserConfig} */
-module.exports = {
+export default {
   i18n: {
     defaultLocale: 'en',
     locales: ['de', 'en'],
@@ -8,6 +10,6 @@ module.exports = {
   reloadOnPrerender: process.env.NODE_ENV === 'development',
   localePath:
     typeof window === 'undefined'
-      ? require('path').resolve('./renderer/public/locales')
+      ? path.resolve('./renderer/public/locales')
       : '/locales',
 }
