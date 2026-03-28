@@ -9,7 +9,10 @@ type JitiOptions = Parameters<typeof createJiti>[1]
 type LoaderAsync = (filepath: string) => Promise<any>
 
 function TypeScriptLoader(options?: JitiOptions): LoaderAsync {
-  const loader: Jiti = createJiti('', { interopDefault: true, ...options })
+  const loader: Jiti = createJiti('nextron', {
+    interopDefault: true,
+    ...options,
+  })
   return async (path: string): Promise<any> => {
     try {
       const mod = (await loader.import(path)) as { default?: unknown }
