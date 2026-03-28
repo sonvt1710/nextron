@@ -12,6 +12,12 @@
   </a>
 </p>
 
+## My Belief for Nextron
+
+1. Show a way of developing desktop apps with only web knowledge
+1. Easy to use
+1. Be transparent and open to OSS developers
+
 ## Support
 
 ### Next.js vs Nextron
@@ -31,12 +37,6 @@
 ### Package Manager
 
 `npm`, `yarn` and `pnpm` are supported.
-
-## My Belief for Nextron
-
-1. Show a way of developing desktop apps with only web knowledge
-1. Easy to use
-1. Be transparent and open to OSS developers
 
 ## Usage
 
