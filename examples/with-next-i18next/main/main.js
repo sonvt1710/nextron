@@ -3,8 +3,8 @@ import { app, ipcMain } from 'electron'
 import serve from 'electron-serve'
 
 import i18next from '../next-i18next.config.js'
-import { userStore } from './helpers/user-store'
-import { createWindow } from './helpers'
+import { userStore } from './helpers/user-store.js'
+import { createWindow } from './helpers/index.js'
 
 const isProd = process.env.NODE_ENV === 'production'
 

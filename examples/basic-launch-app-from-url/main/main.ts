@@ -57,7 +57,9 @@ function checkLauncherUrl(getMainWindow) {
     app.on('open-url', async (_event, url) => {
       const mainWindow = await getMainWindow()
       mainWindow.webContents.send('launcher-url', url)
-      mainWindow.isMinimized() && mainWindow.restore()
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore()
+      }
     })
   }
 
@@ -76,19 +78,24 @@ function checkLauncherUrl(getMainWindow) {
       const url = args.find((arg) =>
         arg.startsWith(`${'your-custom-protocol-scheme'}://`)
       )
-      url && mainWindow.webContents.send('launcher-url', url)
+      if (url) {
+        mainWindow.webContents.send('launcher-url', url)
+      }
 
-      mainWindow.isMinimized() && mainWindow.restore()
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore()
+      }
       mainWindow.focus()
     })
 
     const url = process.argv.find((arg) =>
       arg.startsWith(`${'your-custom-protocol-scheme'}://`)
     )
-    url &&
+    if (url) {
       getMainWindow().then((mainWindow) =>
         mainWindow.webContents.send('launcher-url', url)
       )
+    }
   }
 
   return true

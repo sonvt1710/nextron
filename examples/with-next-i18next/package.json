@@ -7,7 +7,7 @@
   "contributors": [
     "Gregor Adams <greg@pixelass.com>"
   ],
-  "main": "app/background.js",
+  "main": "app/main.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",

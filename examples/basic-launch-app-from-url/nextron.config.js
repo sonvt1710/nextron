@@ -2,7 +2,7 @@ module.exports = {
   webpack: (defaultConfig) =>
     Object.assign(defaultConfig, {
       entry: {
-        background: './main/background.ts',
+        main: './main/main.ts',
         preload: './main/preload.ts',
       },
     }),

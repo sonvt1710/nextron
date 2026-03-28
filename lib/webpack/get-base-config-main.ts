@@ -10,16 +10,12 @@ const cwd = process.cwd()
 export const getBaseConfigMain = async (): Promise<webpack.Configuration> => {
   const { mainSrcDir } = await getNextronConfig()
 
-  const backgroundPath = path.join(
-    cwd,
-    mainSrcDir || 'main',
-    `background${ext}`
-  )
+  const mainPath = path.join(cwd, mainSrcDir || 'main', `main${ext}`)
 
   const config: webpack.Configuration = {
     target: 'electron-main',
     entry: {
-      background: backgroundPath,
+      main: mainPath,
     },
     output: {
       filename: '[name].js',

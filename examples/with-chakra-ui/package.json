@@ -4,7 +4,7 @@
   "description": "My application description",
   "version": "1.0.0",
   "author": "Ketan Patel <ktan.p.patel@gmail.com>",
-  "main": "app/background.js",
+  "main": "app/main.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
