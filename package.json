@@ -45,7 +45,7 @@
     "prepublishOnly": "NODE_ENV=production tsdown"
   },
   "dependencies": {
-    "@babel/core": "7.29.0",
+    "@babel/core": "7.29.6",
     "@babel/plugin-transform-class-properties": "7.28.6",
     "@babel/plugin-transform-object-rest-spread": "7.28.6",
     "@babel/plugin-transform-optional-chaining": "7.28.6",
